@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { Header } from '../src/components/Header'
 import { ListTeachers } from '../src/components/ListTheachers'
 
+type Teacher = /*unresolved*/ any
 
 const Home: NextPage = () => {
   const teachers: Teacher[] = [
