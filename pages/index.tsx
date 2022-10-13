@@ -1,49 +1,79 @@
-import { Box } from '@mui/material'
-import type { NextPage } from 'next'
-import { Header } from '../src/components/Header'
-import { ListTeachers } from '../src/components/ListTheachers'
-
-type Teacher = /*unresolved*/ any
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  Grid,
+  Snackbar,
+  TextField,
+} from "@mui/material";
+import type { NextPage } from "next";
+import { Header } from "../src/components/Header";
+import { ListTeachers } from "../src/components/ListTheachers";
+import { useIndex } from "../src/hooks/pages/useIndex";
 
 const Home: NextPage = () => {
-  const teachers: Teacher[] = [
-    {
-      id: 1,
-      name: 'Professor 1',
-      photo: 'https://github.com/frontendDieferson.png',
-      description: 'Descrição do professor 1',
-      price_hour: 90,
-    },
-    {
-      id: 2,
-      name: 'Professor 2',
-      photo: 'https://github.com/frontendDieferson.png',
-      description: 'Descrição do professor 2',
-      price_hour: 90,
-    },
-    {
-      id: 3,
-      name: 'Professor 3',
-      photo: 'https://github.com/frontendDieferson.png',
-      description: 'Descrição do professor 3',
-      price_hour: 90,
-    },
-    {
-      id: 4,
-      name: 'Professor 4',
-      photo: 'https://github.com/frontendDieferson.png',
-      description: 'Descrição do professor 4',
-      price_hour: 90,
-    },
-  ]
+  const {
+    listTeachers,
+    name,
+    setName,
+    email,
+    setEmail,
+    selectedTeacher,
+    setSelectedTeacher,
+    bookClass,
+    message,
+    setMessage
+  } = useIndex();
 
   return (
-    
-     <Box sx={{backgroundColor:'secondary.main'}}>
-      <ListTeachers teachers={teachers}></ListTeachers>
-     </Box>
-  
-  )
-}
+    <div>
+      <Box sx={{ backgroundColor: "secondary.main" }}>
+        <ListTeachers
+          teachers={listTeachers}
+          onSelect={(teacher) => setSelectedTeacher(teacher)}
+        ></ListTeachers>
+      </Box>
 
-export default Home
+      <Dialog
+        onClose={() => setSelectedTeacher(null)}
+        open={selectedTeacher !== null}
+        fullWidth
+        PaperProps={{ sx: { p: 5 } }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Digite seu nome"
+              type="text"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Digite seu melhor Email"
+              type="email"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <DialogActions sx={{ mt: 2 }}>
+          <Button onClick={() => setSelectedTeacher(null)}>Cancelar</Button>
+          <Button onClick={() => bookClass()}>Marcar</Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar 
+        open={message.length > 0}
+        message={message} 
+        autoHideDuration={2500}
+        onClose={() => setMessage('')}
+      />
+    </div>
+  );
+};
+
+export default Home;

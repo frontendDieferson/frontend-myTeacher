@@ -4,7 +4,7 @@ import theme from '../../../themes/theme';
 
 export const ListStyled = styled('ul')`
     width: 100%;
-    max-width: 900px;
+    max-width: 980px;
     margin: 0 auto;
     padding: ${({theme}) => theme.spacing(10, 2, 10, 2)};
 
@@ -30,9 +30,11 @@ export const ListEmpty = styled('h3')`
 
 export const Photo = styled('img')`
     width: 100%;
+    border-radius: 8px;
 `;
 
 export const Info = styled('div')`
+
 
 `;
 
